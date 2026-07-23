@@ -225,4 +225,4 @@ CLOUDINARY_API_SECRET=your_api_secret
 
 TMDB_API_KEY=your_tmdb_api_key
 
-</div>
+
