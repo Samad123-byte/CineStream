@@ -1,0 +1,1 @@
+import { Link } from "react-router-dom"; export default function NotFoundPage(){return <div className="not-found"><span>404</span><h1>Scene not found</h1><p>This page missed the final cut.</p><Link to="/home" className="button button--primary">Back to movies</Link></div>}
