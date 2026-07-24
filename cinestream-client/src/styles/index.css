@@ -537,7 +537,7 @@ html.motion-ready .motion-reveal.motion-visible{opacity:1;transform:translateY(0
 .trailer-modal{
   position:fixed;
   inset:0;
-  z-index:2000;
+  z-index:2500;
   display:flex;
   align-items:center;
   justify-content:center;

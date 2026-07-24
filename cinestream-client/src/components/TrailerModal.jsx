@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 
 export default function TrailerModal({ videoKey, title, onClose }) {
@@ -20,7 +21,7 @@ export default function TrailerModal({ videoKey, title, onClose }) {
 
   if (!videoKey) return null;
 
-  return (
+  return createPortal(
     <div className="trailer-modal" role="dialog" aria-modal="true" aria-label={`${title || "Trailer"} player`}>
       <button
         type="button"
@@ -46,6 +47,7 @@ export default function TrailerModal({ videoKey, title, onClose }) {
           />
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
