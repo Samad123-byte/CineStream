@@ -9,6 +9,7 @@ import favoriteRoutes from "./routes/favoriteRoutes.js";
 import watchListRoutes from "./routes/watchListRoutes.js";
 import historyRoutes from "./routes/historyRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
+import aiRoutes from "./routes/aiRoutes.js";
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ app.use("/api/favorites", favoriteRoutes);
 app.use("/api/watchlist", watchListRoutes);
 app.use("/api/history", historyRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/ai", aiRoutes);
 
 
 
