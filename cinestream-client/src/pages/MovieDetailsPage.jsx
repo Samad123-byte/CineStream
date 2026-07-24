@@ -10,6 +10,7 @@ import { PageLoading } from "../components/Loading";
 import { useLibrary } from "../context/LibraryContext";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
+import { useMovie } from "../context/MovieContext";
 
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
@@ -22,6 +23,7 @@ export default function MovieDetailsPage() {
   const { token, user } = useAuth();
   const { favoriteIds, watchlistIds, toggleFavorite, toggleWatchlist, recordHistory } = useLibrary();
   const { showToast } = useToast();
+  const { setCurrentMovie } = useMovie();
 
   const loadReviews = () => backend.getReviews(movieId).then((data) => setReviews(data.reviews || [])).catch(() => setReviews([]));
 
@@ -29,11 +31,22 @@ export default function MovieDetailsPage() {
     window.scrollTo(0, 0);
     setMovie(null);
     Promise.all([tmdb.details(movieId), backend.getReviews(movieId)])
-      .then(([details, reviewData]) => { setMovie(details); setReviews(reviewData.reviews || []); })
+.then(([details, reviewData]) => {
+    setMovie(details);
+    setCurrentMovie(details);
+    setReviews(reviewData.reviews || []);
+})
       .catch((error) => showToast(error.message, "error"));
   }, [movieId, showToast]);
 
   const trailer = useMemo(() => getTrailer(movie?.videos?.results), [movie]);
+
+  useEffect(() => {
+    return () => {
+        setCurrentMovie(null);
+    };
+}, [setCurrentMovie]);
+
   if (!movie) return <PageLoading />;
 
   const playTrailer = () => {
@@ -90,4 +103,6 @@ export default function MovieDetailsPage() {
       />
     )}
   </div>;
+
+
 }

@@ -13,7 +13,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <ToastProvider>
         <AuthProvider>
           <LibraryProvider>
-            <App />
+            <MovieProvider>
+              <App />
+            </MovieProvider>
           </LibraryProvider>
         </AuthProvider>
       </ToastProvider>
