@@ -6,6 +6,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { ToastProvider } from "./context/ToastContext";
 import { LibraryProvider } from "./context/LibraryContext";
 import "./styles/index.css";
+import { MovieProvider } from "./context/MovieContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
