@@ -12,12 +12,35 @@ export function renderMarkdown(raw = "") {
 
   const html = [];
   let listType = null;
+  let tableRows = null;
 
   const closeList = () => {
     if (listType) {
       html.push(listType === "ul" ? "</ul>" : "</ol>");
       listType = null;
     }
+  };
+
+  const isTableRow = (line) => /^\|.*\|$/.test(line.trim());
+  const isTableDivider = (line) => /^\|?[\s:|-]+\|?$/.test(line.trim()) && line.includes("-");
+
+  const splitRow = (line) =>
+    line.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((cell) => cell.trim());
+
+  const closeTable = () => {
+    if (!tableRows) return;
+    const [headerRow, ...bodyRows] = tableRows;
+    html.push('<div class="ai-chat-table-wrap"><table>');
+    if (headerRow) html.push(`<thead><tr>${headerRow.map((cell) => `<th>${inline(cell)}</th>`).join("")}</tr></thead>`);
+    if (bodyRows.length) {
+      html.push("<tbody>");
+      bodyRows.forEach((row) => {
+        html.push(`<tr>${row.map((cell) => `<td>${inline(cell)}</td>`).join("")}</tr>`);
+      });
+      html.push("</tbody>");
+    }
+    html.push("</table></div>");
+    tableRows = null;
   };
 
   const inline = (text) =>
@@ -32,8 +55,18 @@ export function renderMarkdown(raw = "") {
 
     if (!trimmed) {
       closeList();
+      closeTable();
       return;
     }
+
+    if (isTableRow(trimmed)) {
+      if (isTableDivider(trimmed) && tableRows) return; // skip the |---|---| separator row
+      closeList();
+      if (!tableRows) tableRows = [];
+      tableRows.push(splitRow(trimmed));
+      return;
+    }
+    closeTable();
 
     const heading = trimmed.match(/^(#{1,3})\s+(.*)/);
     if (heading) {
@@ -62,5 +95,6 @@ export function renderMarkdown(raw = "") {
   });
 
   closeList();
+  closeTable();
   return html.join("");
 }
