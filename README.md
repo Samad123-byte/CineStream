@@ -304,26 +304,6 @@ Image Storage:
 
 - Cloudinary
 
----
-
-# 📸 Screenshots
-
-(Add application screenshots here)
-
----
-
-# 🔮 Future Improvements
-
-- Voice AI Assistant
-- Advanced Recommendation Engine
-- User-Based Movie Suggestions
-- AI Movie Search
-- Watch Party Feature
-- Real Streaming Integration
-- Progressive Web App (PWA)
-
----
-
 # 👨‍💻 Author
 
 **Abdul Samad Khan**
