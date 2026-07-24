@@ -2,7 +2,13 @@ import axios from "axios";
 
 export const chatWithAI = async (req, res) => {
   try {
-    const { message } = req.body;
+
+   const {
+  message,
+  page,
+  movie,
+  history,
+} = req.body;
 
     if (!message) {
       return res.status(400).json({
@@ -11,41 +17,77 @@ export const chatWithAI = async (req, res) => {
       });
     }
 
+  let context = "";
+
+if (page) {
+  context += `Current Page: ${page}\n`;
+}
+
+if (movie) {
+  context += `
+Current Movie:
+Title: ${movie.title}
+Overview: ${movie.overview}
+Genres: ${movie.genres?.join(", ")}
+Rating: ${movie.rating}
+Release Date: ${movie.releaseDate}
+`;
+}
+
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
        model: "openai/gpt-oss-20b:free",
 
-        messages: [
-          {
-            role: "system",
-            content: `
-            You are CineStream AI, an expert movie recommendation assistant.
+      messages: [
+  {
+    role: "system",
+    content: `
+You are CineStream AI, an expert movie recommendation assistant.
 
 Your purpose is to help users discover movies and TV shows.
 
 Rules:
 
 1. Recommend only real movies and TV shows.
-2. Never invent movie titles.
-3. Never mix languages.
-4. Reply only in English.
-5. Format responses using Markdown (bold, bullet lists, short paragraphs).
-6. Never use Markdown tables — replies are shown in a narrow chat bubble. Use a bold movie/show title followed by a short bullet point explaining it instead.
-7. Keep recommendations concise.
-8. Explain why each recommendation fits.
-9. If you don't know something, say so instead of making it up.
-10. If asked something unrelated to movies or TV, politely say:
+2. Never invent titles.
+3. Reply only in English.
+4. Use Markdown.
+5. Never use Markdown tables.
+6. Keep answers concise.
+7. Explain WHY each recommendation fits.
+8. Never answer unrelated topics.
+9. If asked something outside movies or TV, reply:
 "I'm CineStream AI 🤖. I specialize in movies and TV shows."
 
-Always behave like a professional movie expert.
-            `,
-          },
-          {
-            role: "user",
-            content: message,
-          },
-        ],
+You also receive information about the user's current page, current movie and recent conversation.
+
+If the current movie is available, use it to personalize your recommendations.
+
+If the user says:
+
+"Recommend something"
+
+while viewing Interstellar,
+
+assume they want recommendations similar to Interstellar.
+
+Never ignore the provided context.
+`,
+  },
+
+  ...(history || []),
+
+  {
+    role: "system",
+    content: context,
+  },
+
+  {
+    role: "user",
+    content: message,
+  },
+],
       },
       {
         headers: {
