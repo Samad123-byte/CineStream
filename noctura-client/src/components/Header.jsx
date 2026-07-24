@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import Brand from "./Brand";
+import ThemeSwitcher from "./ThemeSwitcher";
 import { useAuth } from "../context/AuthContext";
 
 const navigationLinks = [
@@ -125,6 +126,7 @@ export default function Header() {
           </nav>
 
           <div className="header-user">
+            <ThemeSwitcher compact />
             <Link to="/search" className="icon-button" aria-label="Search">
               <Search aria-hidden="true" />
             </Link>

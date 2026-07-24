@@ -8,7 +8,7 @@ export const imageUrl = (path, size = "w500") =>
 export const backdropUrl = (path, size = "original") =>
   path
     ? `${TMDB_IMAGE_BASE_URL}/${size}${path}`
-    : "https://placehold.co/1600x900/101116/f5f5f7?text=CineStream";
+    : "https://placehold.co/1600x900/101116/f5f5f7?text=Noctura";
 
 export const yearFromDate = (date) => (date ? String(date).slice(0, 4) : "—");
 

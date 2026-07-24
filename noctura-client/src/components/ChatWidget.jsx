@@ -5,13 +5,13 @@ import { backend } from "../api/backend";
 import { renderMarkdown } from "../utils/markdown";
 import { useMovie } from "../context/MovieContext";
 
-const SESSION_KEY = "cinestream_chat_session";
+const SESSION_KEY = "noctura_chat_session";
 
 const WELCOME_MESSAGE = {
   id: "welcome",
   role: "bot",
   content:
-    "Hi, I'm **CineStream AI** 🤖🎬\n\nAsk me for movie or TV show recommendations — by genre, mood, actor, or anything similar to a title you already love.",
+    "Hi, I'm **Noctura AI** 🤖🎬\n\nAsk me for movie or TV show recommendations — by genre, mood, actor, or anything similar to a title you already love.",
 };
 
 const SUGGESTIONS = [
@@ -142,7 +142,7 @@ const { currentMovie } = useMovie();
         type="button"
         className={`ai-chat-launcher ${open ? "is-open" : ""}`}
         onClick={() => setOpen((value) => !value)}
-        aria-label={open ? "Close CineStream AI chat" : "Open CineStream AI chat"}
+        aria-label={open ? "Close Noctura AI chat" : "Open Noctura AI chat"}
         aria-expanded={open}
       >
         <span className="ai-chat-launcher__icon ai-chat-launcher__icon--chat">
@@ -153,12 +153,12 @@ const { currentMovie } = useMovie();
         </span>
       </button>
 
-      <div className={`ai-chat-window ${open ? "is-open" : ""}`} role="dialog" aria-modal="true" aria-label="CineStream AI chat">
+      <div className={`ai-chat-window ${open ? "is-open" : ""}`} role="dialog" aria-modal="true" aria-label="Noctura AI chat">
         <header className="ai-chat-header">
           <div className="ai-chat-header__brand">
             <span className="ai-chat-header__avatar"><Sparkles aria-hidden="true" /></span>
             <div>
-              <strong>CineStream AI</strong>
+              <strong>Noctura AI</strong>
               <span>Movie &amp; TV recommendations</span>
             </div>
           </div>

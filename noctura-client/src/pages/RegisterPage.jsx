@@ -1,0 +1,13 @@
+import { useState } from "react";
+import { ArrowRight, Lock, Mail, User } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import Brand from "../components/Brand";
+import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
+
+export default function RegisterPage() {
+  const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" }); const [loading, setLoading] = useState(false);
+  const { register } = useAuth(); const { showToast } = useToast(); const navigate = useNavigate();
+  const submit = async (e) => { e.preventDefault(); if (form.password !== form.confirm) return showToast("Passwords do not match", "error"); if (form.password.length < 6) return showToast("Use at least 6 characters", "error"); setLoading(true); try { await register({ name: form.name, email: form.email, password: form.password }); showToast("Your account is ready", "success"); navigate("/home"); } catch (error) { showToast(error.message, "error"); } finally { setLoading(false); } };
+  return <div className="auth-page auth-page--register"><div className="auth-art"><Brand to="/" /><div><span className="eyebrow">Join Noctura</span><h1>Your movies.<br />Your way.</h1><p>Create one account for favorites, watchlists, history, reviews, and a personalized profile.</p></div></div><div className="auth-panel"><div className="auth-card"><span className="eyebrow">Create account</span><h2>Start watching differently</h2><p>It only takes a moment.</p><form onSubmit={submit}><label>Full name<div className="input-wrap"><User /><input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required placeholder="Your name" /></div></label><label>Email address<div className="input-wrap"><Mail /><input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required placeholder="you@example.com" /></div></label><label>Password<div className="input-wrap"><Lock /><input type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required placeholder="At least 6 characters" /></div></label><label>Confirm password<div className="input-wrap"><Lock /><input type="password" value={form.confirm} onChange={(e) => setForm({ ...form, confirm: e.target.value })} required placeholder="Repeat password" /></div></label><button className="button button--primary auth-submit" disabled={loading}>{loading ? "Creating account…" : <>Create account <ArrowRight /></>}</button></form><p className="auth-switch">Already have an account? <Link to="/login">Sign in</Link></p></div></div></div>;
+}

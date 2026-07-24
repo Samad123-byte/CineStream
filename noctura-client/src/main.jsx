@@ -7,11 +7,13 @@ import { ToastProvider } from "./context/ToastContext";
 import { LibraryProvider } from "./context/LibraryContext";
 import "./styles/index.css";
 import { MovieProvider } from "./context/MovieContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ToastProvider>
+    <ThemeProvider>
+      <BrowserRouter>
+        <ToastProvider>
         <AuthProvider>
           <LibraryProvider>
             <MovieProvider>
@@ -19,7 +21,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             </MovieProvider>
           </LibraryProvider>
         </AuthProvider>
-      </ToastProvider>
-    </BrowserRouter>
+        </ToastProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>,
 );
