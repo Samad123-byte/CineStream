@@ -60,28 +60,15 @@ Rules:
 9. If asked something outside movies or TV, reply:
 "I'm CineStream AI 🤖. I specialize in movies and TV shows."
 
-You also receive information about the user's current page, current movie and recent conversation.
+${context ? `Live context for THIS message (authoritative — always trust this over anything mentioned earlier in the conversation, since the user may have navigated to a different page or movie since then):\n${context}` : ""}
 
-If the current movie is available, use it to personalize your recommendations.
+If the user asks what movie/show they are currently viewing, answer using ONLY the "Current Movie" info above. If no Current Movie is provided, say you can't see a movie page open right now. Never reuse a movie title from earlier in the conversation for this — the user may have changed pages.
 
-If the user says:
-
-"Recommend something"
-
-while viewing Interstellar,
-
-assume they want recommendations similar to Interstellar.
-
-Never ignore the provided context.
+If the user says "recommend something similar" with no other detail, base it on the Current Movie above if one is provided.
 `,
   },
 
   ...(history || []),
-
-  {
-    role: "system",
-    content: context,
-  },
 
   {
     role: "user",
