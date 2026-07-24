@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { Bot, MessageCircle, Send, Sparkles, Trash2, X } from "lucide-react";
 import { backend } from "../api/backend";
 import { renderMarkdown } from "../utils/markdown";
+import { useMovie } from "../context/MovieContext";
 
 const SESSION_KEY = "cinestream_chat_session";
 
@@ -37,6 +38,8 @@ export default function ChatWidget() {
   const [typing, setTyping] = useState(false);
   const scrollRef = useRef(null);
   const inputRef = useRef(null);
+
+const { currentMovie } = useMovie();
 
   useEffect(() => {
     try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(messages)); } catch { /* ignore */ }
@@ -75,7 +78,29 @@ export default function ChatWidget() {
     setTyping(true);
 
     try {
-      const data = await backend.chatWithAI(trimmed);
+    const data = await backend.chatWithAI({
+  message: trimmed,
+
+  page: currentMovie ? "movie-details" : "general",
+
+  movie: currentMovie
+    ? {
+        id: currentMovie.id,
+        title: currentMovie.title,
+        overview: currentMovie.overview,
+        rating: currentMovie.vote_average,
+        genres: currentMovie.genres?.map((g) => g.name),
+        releaseDate: currentMovie.release_date,
+      }
+    : null,
+
+  history: messages
+    .slice(-6)
+    .map((m) => ({
+      role: m.role,
+      content: m.content,
+    })),
+});
       const botMessage = {
         id: `b-${Date.now()}`,
         role: "bot",
