@@ -5,6 +5,7 @@ import { tmdb } from "../api/tmdb";
 import { backend } from "../api/backend";
 import { backdropUrl, formatRating, formatRuntime, getTrailer, imageUrl, yearFromDate } from "../utils/movie";
 import MovieRow from "../components/MovieRow";
+import TrailerModal from "../components/TrailerModal";
 import { PageLoading } from "../components/Loading";
 import { useLibrary } from "../context/LibraryContext";
 import { useAuth } from "../context/AuthContext";
@@ -17,6 +18,7 @@ export default function MovieDetailsPage() {
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [trailerOpen, setTrailerOpen] = useState(false);
   const { token, user } = useAuth();
   const { favoriteIds, watchlistIds, toggleFavorite, toggleWatchlist, recordHistory } = useLibrary();
   const { showToast } = useToast();
@@ -36,7 +38,7 @@ export default function MovieDetailsPage() {
 
   const playTrailer = () => {
     recordHistory(movie.id, 0, movie.runtime || 0);
-    if (trailer) window.open(`https://www.youtube.com/watch?v=${trailer.key}`, "_blank", "noopener,noreferrer");
+    if (trailer) setTrailerOpen(true);
     else showToast("No trailer is currently available", "error");
   };
 
@@ -79,5 +81,13 @@ export default function MovieDetailsPage() {
       </div>
     </section>
     <MovieRow title="You may also like" movies={(movie.recommendations?.results?.length ? movie.recommendations.results : movie.similar?.results) || []} />
+
+    {trailerOpen && (
+      <TrailerModal
+        videoKey={trailer?.key}
+        title={`${movie.title} — Trailer`}
+        onClose={() => setTrailerOpen(false)}
+      />
+    )}
   </div>;
 }
