@@ -901,8 +901,8 @@ html.motion-ready .motion-reveal.motion-visible{opacity:1;transform:translateY(0
     left:0;
     bottom:0;
     width:100vw;
-    height:100dvh;
     height:100vh;
+    height:100dvh;
     max-height:none;
     border-radius:0;
     border:0;
