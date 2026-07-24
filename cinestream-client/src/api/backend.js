@@ -24,5 +24,9 @@ export const backend = {
   addReview: (token, payload) => apiRequest("/reviews", { method: "POST", token, body: payload }),
   removeReview: (token, movieId) => apiRequest(`/reviews/${movieId}`, { method: "DELETE", token }),
 
-  chatWithAI: (message) => apiRequest("/ai/chat", { method: "POST", body: { message } }),
+chatWithAI: (payload) =>
+  apiRequest("/ai/chat", {
+    method: "POST",
+    body: payload,
+  }),
 };

@@ -97,7 +97,7 @@ const { currentMovie } = useMovie();
   history: messages
     .slice(-6)
     .map((m) => ({
-      role: m.role,
+    role: m.role === "bot" ? "assistant" : m.role,
       content: m.content,
     })),
 });
