@@ -530,8 +530,6 @@ html.motion-ready .motion-reveal.motion-visible{opacity:1;transform:translateY(0
 @media(max-width:760px){.app-shell main>*,.landing-page,.auth-page,.not-found{animation-duration:.45s}.movie-card:hover,.landing-poster-grid article:hover,.landing-features>div:hover{transform:translateY(-4px)}.movie-hero__content,.landing-hero>div,.details-copy{animation-duration:.68s}.details-poster{animation:cs-poster-enter .7s var(--motion-spring) both}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}html.motion-ready .motion-reveal{opacity:1;transform:none;filter:none}}
 
-
-
 /* =========================================================
    TRAILER MODAL — in-page YouTube playback
    Fully responsive: full-bleed on mobile, centered box on desktop.
@@ -546,9 +544,9 @@ html.motion-ready .motion-reveal.motion-visible{opacity:1;transform:translateY(0
   padding:0;
   animation:cs-trailer-fade .25s ease both;
 }
- 
+
 @keyframes cs-trailer-fade{from{opacity:0}to{opacity:1}}
- 
+
 .trailer-modal__backdrop{
   position:absolute;
   inset:0;
@@ -557,16 +555,16 @@ html.motion-ready .motion-reveal.motion-visible{opacity:1;transform:translateY(0
   backdrop-filter:blur(6px);
   cursor:pointer;
 }
- 
+
 .trailer-modal__box{
   position:relative;
   z-index:1;
   width:min(1000px,94vw);
   animation:cs-trailer-pop .3s var(--motion-spring,cubic-bezier(.16,1,.3,1)) both;
 }
- 
+
 @keyframes cs-trailer-pop{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
- 
+
 .trailer-modal__frame{
   position:relative;
   width:100%;
@@ -576,7 +574,7 @@ html.motion-ready .motion-reveal.motion-visible{opacity:1;transform:translateY(0
   background:#000;
   box-shadow:0 30px 80px rgba(0,0,0,.6);
 }
- 
+
 .trailer-modal__frame iframe{
   position:absolute;
   inset:0;
@@ -584,7 +582,7 @@ html.motion-ready .motion-reveal.motion-visible{opacity:1;transform:translateY(0
   height:100%;
   border:0;
 }
- 
+
 .trailer-modal__close{
   position:absolute;
   top:-46px;
@@ -599,11 +597,11 @@ html.motion-ready .motion-reveal.motion-visible{opacity:1;transform:translateY(0
   color:#fff;
   transition:background-color .2s ease,transform .2s ease;
 }
- 
+
 .trailer-modal__close:hover{background:rgba(255,255,255,.18);transform:scale(1.06)}
 .trailer-modal__close:active{transform:scale(.94)}
 .trailer-modal__close svg{width:18px;height:18px}
- 
+
 @media(max-width:760px){
   .trailer-modal{padding:0}
   .trailer-modal__box{width:100vw}
@@ -615,7 +613,7 @@ html.motion-ready .motion-reveal.motion-visible{opacity:1;transform:translateY(0
     border-color:rgba(255,255,255,.22);
   }
 }
- 
+
 @media(max-width:420px){
   .trailer-modal__frame{aspect-ratio:auto;height:100dvh;height:100vh}
 }
